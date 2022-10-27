@@ -1,8 +1,10 @@
 #pragma once
 
+#include <concepts>
+#include <functional>
 #include <iostream>
 #include <string>
-#include <tuple>
+#include <type_traits>
 #include <vector>
 
 namespace linearAlgebra {
@@ -12,6 +14,66 @@ namespace linearAlgebra {
     using Scalar = double;
 
     using Angle = double;
+
+
+    // Combine concepts
+    template<typename T>
+    concept ScalarType
+        = std::floating_point<T>
+        || std::integral<T>
+        && requires(T a, T b) {
+        requires a+b;
+        requires a*b;
+    };
+
+    template<ScalarType T, size_t Dim>
+    class Vector {
+
+        public:
+
+            Vector(ScalarType auto ... xn) {
+                vec = std::initializer_list<T>{xn...};
+            }
+
+            auto operator+(Vector other) -> Vector<T, Dim> {    // Vector addition
+                std::vector<T> ret;
+                std::transform(vec.begin(), vec.end(),
+                    other.vec.begin(),
+                    std::back_inserter(ret),
+                    std::plus<T>());
+                return ret;
+            };
+
+            auto operator-(Vector other) -> Vector<T, Dim> {    // Vector subtraction
+                std::vector<T> ret;
+                std::transform(vec.begin(), vec.end(),
+                    other.vec.begin(),
+                    std::back_inserter(ret),
+                    std::minus<T>());
+                return ret;
+            };
+
+            auto operator*(Vector other) -> Scalar;             // Dotproduct
+
+            auto toString() -> std::string {
+                std::string str = "[ ";
+                for(size_t i=0; i<vec.size()-1; i++) {
+                    str += std::to_string(vec[i]) + ", ";
+                }
+                str += std::to_string(vec[vec.size()-1]) + " ]";
+                return str;
+            }
+
+            auto operator<<(std::ostream& ostr) -> std::ostream&;
+
+        private:
+            Vector(std::vector<T> v) {
+                vec = v;
+            }
+
+            std::vector<T> vec;
+
+    };
 
     class Vector3d {
         public:

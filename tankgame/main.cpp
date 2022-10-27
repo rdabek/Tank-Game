@@ -20,5 +20,14 @@ int main() {
     std::cout << "Expected value: " << std::pow(vecA.length(), 2)*std::sqrt(3.0)
         << ", Calculated value:\n" << calculateTetraederSurface(r, a) << "\n";
 
+    auto vec1 = Vector<Scalar, 2>{1.0, 0.0, 2.0};
+    auto vec2 = Vector<Scalar, 2>{0.0, 1.0, -1.0};
+    std::cout << "\nVectors to add:" << std::endl;
+    std::cout << vec1.toString() << std::endl;
+    std::cout << vec2.toString() << std::endl;
+
+    std::cout << (vec1+vec2).toString() << std::endl;
+    std::cout << (vec1-vec2).toString() << std::endl;
+
     return 0;
 }

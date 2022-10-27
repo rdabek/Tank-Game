@@ -5,7 +5,7 @@
 #include <variant>
 
 namespace linearAlgebra {
- 
+    
     auto Vector3d::toString() -> std::string {
         using namespace std;
         auto ret = std::string();
