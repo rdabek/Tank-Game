@@ -85,9 +85,18 @@ namespace linearAlgebra {
                 return str;
             }
 
+            // Enable Crossproduct only when Dim == 3
+            auto x(Vector<Scalar, 3> other) -> typename std::enable_if<Dim == 3, Vector<Scalar, 3>>::type {
+                return {
+                    vec[1]*other.vec[2] - vec[2]*other.vec[1],
+                    vec[2]*other.vec[0] - vec[0]*other.vec[2],
+                    vec[0]*other.vec[1] - vec[1]*other.vec[0]
+                };
+            }
+
             auto operator<<(std::ostream& ostr) -> std::ostream&;   // No idea yet
 
-        private:
+        protected:
             Vector(std::vector<T> v) {
                 vec = v;
             }
@@ -95,33 +104,7 @@ namespace linearAlgebra {
             std::vector<T> vec;
     };
 
-    class Vector3d {
-        public:
-            Vector3d() {
-                p = Point3d{0.0, 0.0, 0.0};
-            }
-
-            Vector3d(Point3d p) {
-                this->p = p;
-            }
-
-            auto toString() -> std::string;
-
-            auto operator+(Vector3d other) -> Vector3d;     // Vector addition
-            
-            auto operator-(Vector3d other) -> Vector3d;     // Vector subtraction
-
-            auto operator*(Scalar scalar) -> Vector3d;      // Scalar multiplication
-            
-            auto operator*(Vector3d other) -> Scalar;       // Dot Product
-
-            auto x(Vector3d other) -> Vector3d;             // Crossproduct
-
-            auto length() -> Scalar;                        // Vector Length
-
-        private:
-            Point3d p;
-    };
+    using Vector3d = Vector<Scalar, 3>;
 
     inline auto operator<<(std::ostream& os, Vector3d v) -> std::ostream&
     {

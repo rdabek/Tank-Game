@@ -10,7 +10,7 @@ int main() {
     auto a = Angle(45);
 
     auto ang = a*M_PI/180.0;
-    auto vecA = Vector3d{Point3d{r*sin(ang), 0.0, -r*cos(ang)}};
+    auto vecA = Vector3d{r*sin(ang), 0.0, -r*cos(ang)};
 
     std::cout << "vec0->A: " << vecA << ", length: " << vecA.length() << "\n\n";
 
@@ -23,20 +23,23 @@ int main() {
     auto vec0 = Vector<Scalar, 3>{1.0, 1.0, 1.5};
     auto vec1 = Vector<Scalar, 3>{1.0, 2.0, 1.5};
     auto vec2 = Vector<Scalar, 3>{2.0, 1.0, 2.0};
-    std::cout << "\nVectors to add:" << std::endl;
+
+    std::cout << "\nVectors 1 and 2:" << std::endl;
     std::cout << vec1.toString() << std::endl;
     std::cout << vec2.toString() << std::endl;
 
+    std::cout << "\nAddition and Subtraction" << std::endl;
     std::cout << (vec1+vec2).toString() << std::endl;
     std::cout << (vec1-vec2).toString() << std::endl;
 
-    std::cout << "\n" << std::endl;
+    std::cout << "\nDotProduct:" << std::endl;
     std::cout << vec1*vec2 << std::endl;
 
-    std::cout << "\n" << std::endl;
+    std::cout << "\nMultiplication by Scalar" << std::endl;
     std::cout << (vec0*5.0).toString() << std::endl;
 
     auto vecX = Vector<Scalar, 3>{r*sin(ang), 0.0, -r*cos(ang)};
+    std::cout << "\nVector: " << vecX << " length:" << std::endl;
     std::cout << (vecX).length() << std::endl;
 
     return 0;
