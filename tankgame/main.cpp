@@ -36,5 +36,8 @@ int main() {
     std::cout << "\n" << std::endl;
     std::cout << (vec0*5.0).toString() << std::endl;
 
+    auto vecX = Vector<Scalar, 3>{r*sin(ang), 0.0, -r*cos(ang)};
+    std::cout << (vecX).length() << std::endl;
+
     return 0;
 }

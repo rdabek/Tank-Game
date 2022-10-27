@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cmath>
 #include <concepts>
 #include <functional>
 #include <iostream>
@@ -66,6 +67,13 @@ namespace linearAlgebra {
                 for(size_t i=0; i<vec.size(); i++)
                     ret += vec[i]*other.vec[i];
                 return ret;
+            }
+
+            auto length() -> Scalar {
+                Scalar ret = 0.0;
+                for(size_t i=0; i<vec.size(); i++)
+                    ret += vec[i]*vec[i];
+                return std::sqrt(ret);
             }
 
             auto toString() -> std::string {                        // Convert to string to output
