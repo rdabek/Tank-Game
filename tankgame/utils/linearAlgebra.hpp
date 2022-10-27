@@ -28,21 +28,14 @@ namespace linearAlgebra {
 
     template<ScalarType T, size_t Dim>
     class Vector {
-
         public:
-
-            template <typename X0, typename ...Xn>
-            std::enable_if<sizeof...(Xn) + 1 == Dim, void>::type
-            assign(X0 x0, Xn... xn) {}
-            
-            template <ScalarType ...Xn,
-                std::size_t i = sizeof...(Xn),              // Get the amount of params in the init list
-                std::enable_if_t<i == Dim, int> = 0>        // Only activate if number of elements in list == Dim of the Vector
+            template <ScalarType ...Xn>
+            requires(sizeof...(Xn) == Dim)      // Only activate if number of elements in list == Dim of the Vector
             Vector(Xn ... xn) {
                 vec = std::initializer_list<T>{xn...};
             }
 
-            auto operator+(Vector other) -> Vector<T, Dim> {    // Vector addition
+            auto operator+(Vector other) -> Vector<T, Dim> {        // Vector addition
                 std::vector<T> ret;
                 std::transform(vec.begin(), vec.end(),
                     other.vec.begin(),
@@ -51,7 +44,7 @@ namespace linearAlgebra {
                 return ret;
             };
 
-            auto operator-(Vector other) -> Vector<T, Dim> {    // Vector subtraction
+            auto operator-(Vector other) -> Vector<T, Dim> {        // Vector subtraction
                 std::vector<T> ret;
                 std::transform(vec.begin(), vec.end(),
                     other.vec.begin(),
@@ -60,9 +53,22 @@ namespace linearAlgebra {
                 return ret;
             };
 
-            auto operator*(Vector other) -> Scalar;             // Dotproduct
+            auto operator*(Scalar s) -> Vector<T, Dim> {            // Multiplication with Scalar on Vector
+                std::vector<T> ret;
+                std::transform(vec.begin(), vec.end(),
+                    std::back_inserter(ret),
+                    [&s](Scalar elem){ return s*elem; });
+                return ret;
+            }
 
-            auto toString() -> std::string {
+            auto operator*(Vector other) -> Scalar {                // Dotproduct
+                Scalar ret = 0.0;
+                for(size_t i=0; i<vec.size(); i++)
+                    ret += vec[i]*other.vec[i];
+                return ret;
+            }
+
+            auto toString() -> std::string {                        // Convert to string to output
                 std::string str = "[ ";
                 for(size_t i=0; i<vec.size()-1; i++) {
                     str += std::to_string(vec[i]) + ", ";
@@ -71,7 +77,7 @@ namespace linearAlgebra {
                 return str;
             }
 
-            auto operator<<(std::ostream& ostr) -> std::ostream&;
+            auto operator<<(std::ostream& ostr) -> std::ostream&;   // No idea yet
 
         private:
             Vector(std::vector<T> v) {
@@ -79,7 +85,6 @@ namespace linearAlgebra {
             }
 
             std::vector<T> vec;
-
     };
 
     class Vector3d {
