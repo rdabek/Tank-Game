@@ -27,7 +27,7 @@ namespace linearAlgebra {
                 vec = std::initializer_list<T>{xn...};
             }
 
-            auto operator+(const Vector& other) -> Vector<T, Dim> {        // Vector addition
+            auto operator+(const Vector& other) const -> Vector<T, Dim> {        // Vector addition
                 std::vector<T> ret;
                 std::transform(vec.begin(), vec.end(),
                     other.vec.begin(),
@@ -36,7 +36,7 @@ namespace linearAlgebra {
                 return ret;
             };
 
-            auto operator-(const Vector& other) -> Vector<T, Dim> {        // Vector subtraction
+            auto operator-(const Vector& other) const -> Vector<T, Dim> {        // Vector subtraction
                 std::vector<T> ret;
                 std::transform(vec.begin(), vec.end(),
                     other.vec.begin(),
@@ -45,7 +45,7 @@ namespace linearAlgebra {
                 return ret;
             };
 
-            auto operator*(const Scalar& s) -> Vector<T, Dim> {            // Multiplication with Scalar on Vector
+            auto operator*(const Scalar& s) const -> Vector<T, Dim> {            // Multiplication with Scalar on Vector
                 std::vector<T> ret;
                 std::transform(vec.begin(), vec.end(),
                     std::back_inserter(ret),
@@ -53,21 +53,21 @@ namespace linearAlgebra {
                 return ret;
             }
 
-            auto operator*(const Vector& other) -> Scalar {                // Dotproduct
+            auto operator*(const Vector& other) const -> Scalar {                // Dotproduct
                 Scalar ret = 0.0;
                 for(size_t i=0; i<vec.size(); i++)
                     ret += vec[i]*other.vec[i];
                 return ret;
             }
 
-            auto length() -> Scalar {
+            auto length() const -> Scalar {
                 Scalar ret = 0.0;
                 for(size_t i=0; i<vec.size(); i++)
                     ret += vec[i]*vec[i];
                 return std::sqrt(ret);
             }
 
-            auto toString() -> std::string {                        // Convert to string to output
+            auto toString() const -> std::string {                        // Convert to string to output
                 std::string str = "[ ";
                 for(size_t i=0; i<vec.size()-1; i++) {
                     str += std::to_string(vec[i]) + ", ";
@@ -77,7 +77,7 @@ namespace linearAlgebra {
             }
 
             // Enable Crossproduct only when Dim == 3
-            auto x(Vector<Scalar, 3> other) -> typename std::enable_if<Dim == 3, Vector<Scalar, 3>>::type {
+            auto x(const Vector<Scalar, 3>& other) const -> typename std::enable_if<Dim == 3, Vector<Scalar, 3>>::type {
                 return {
                     vec[1]*other.vec[2] - vec[2]*other.vec[1],
                     vec[2]*other.vec[0] - vec[0]*other.vec[2],
@@ -96,7 +96,7 @@ namespace linearAlgebra {
     using Vector3d = Vector<Scalar, 3>;
 
     template<ScalarType S, size_t Dim>
-    inline auto operator<<(std::ostream& os, Vector<S, Dim> v) -> std::ostream&
+    inline auto operator<<(std::ostream& os, const Vector<S, Dim>& v) -> std::ostream&
     {
         os << v.toString();
         return os;

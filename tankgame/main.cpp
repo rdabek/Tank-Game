@@ -40,7 +40,7 @@ int main() {
     std::cout << "\nMultiplication by Scalar" << std::endl;
     std::cout << (vec0*5.0).toString() << std::endl;
 
-    auto vecX = Vector<Scalar, 3>{r*sin(ang), 0.0, -r*cos(ang)};
+    const auto vecX = Vector<Scalar, 3>{r*sin(ang), 0.0, -r*cos(ang)};
     std::cout << "\nVector: " << vecX << " length:" << std::endl;
     std::cout << (vecX).length() << std::endl;
 
