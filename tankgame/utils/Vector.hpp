@@ -16,26 +16,18 @@ namespace linearAlgebra {
 
     // Concept for the Scalar type of the Vector
     template<typename T>
-    concept ScalarType
-        = std::floating_point<T>
-        || std::integral<T>
-        && requires(T a, T b, Scalar s) {
-            requires a+b;
-            requires a-b;
-            requires a*b;
-            requires s*a;
-        };
+    concept ScalarType = std::is_arithmetic<T>::value;      // Arithmetic operations have to be valid
 
     template<ScalarType T, size_t Dim>
     class Vector {
         public:
             template <ScalarType ...Xn>
             requires(sizeof...(Xn) == Dim)      // Only activate if number of elements in list == Dim of the Vector
-            Vector(Xn ... xn) {
+            Vector(const Xn& ... xn) {
                 vec = std::initializer_list<T>{xn...};
             }
 
-            auto operator+(Vector other) -> Vector<T, Dim> {        // Vector addition
+            auto operator+(const Vector& other) -> Vector<T, Dim> {        // Vector addition
                 std::vector<T> ret;
                 std::transform(vec.begin(), vec.end(),
                     other.vec.begin(),
@@ -44,7 +36,7 @@ namespace linearAlgebra {
                 return ret;
             };
 
-            auto operator-(Vector other) -> Vector<T, Dim> {        // Vector subtraction
+            auto operator-(const Vector& other) -> Vector<T, Dim> {        // Vector subtraction
                 std::vector<T> ret;
                 std::transform(vec.begin(), vec.end(),
                     other.vec.begin(),
@@ -53,7 +45,7 @@ namespace linearAlgebra {
                 return ret;
             };
 
-            auto operator*(Scalar s) -> Vector<T, Dim> {            // Multiplication with Scalar on Vector
+            auto operator*(const Scalar& s) -> Vector<T, Dim> {            // Multiplication with Scalar on Vector
                 std::vector<T> ret;
                 std::transform(vec.begin(), vec.end(),
                     std::back_inserter(ret),
@@ -61,7 +53,7 @@ namespace linearAlgebra {
                 return ret;
             }
 
-            auto operator*(Vector other) -> Scalar {                // Dotproduct
+            auto operator*(const Vector& other) -> Scalar {                // Dotproduct
                 Scalar ret = 0.0;
                 for(size_t i=0; i<vec.size(); i++)
                     ret += vec[i]*other.vec[i];
