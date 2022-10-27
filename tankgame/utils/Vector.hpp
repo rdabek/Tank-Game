@@ -93,9 +93,7 @@ namespace linearAlgebra {
                 };
             }
 
-            auto operator<<(std::ostream& ostr) -> std::ostream&;   // No idea yet
-
-        protected:
+        private:
             Vector(std::vector<T> v) {
                 vec = v;
             }
@@ -105,7 +103,8 @@ namespace linearAlgebra {
 
     using Vector3d = Vector<Scalar, 3>;
 
-    inline auto operator<<(std::ostream& os, Vector3d v) -> std::ostream&
+    template<ScalarType S, size_t Dim>
+    inline auto operator<<(std::ostream& os, Vector<S, Dim> v) -> std::ostream&
     {
         os << v.toString();
         return os;
