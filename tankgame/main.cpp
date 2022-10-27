@@ -27,22 +27,22 @@ int main() {
     auto vec2 = Vector<Scalar, 3>{2.0, 1.0, 2.0};
 
     std::cout << "\nVectors 1 and 2:" << std::endl;
-    std::cout << vec1.toString() << std::endl;
-    std::cout << vec2.toString() << std::endl;
+    std::cout << vec1 << std::endl;
+    std::cout << vec2 << std::endl;
 
     std::cout << "\nAddition and Subtraction" << std::endl;
-    std::cout << (vec1+vec2).toString() << std::endl;
-    std::cout << (vec1-vec2).toString() << std::endl;
+    std::cout << vec1+vec2 << std::endl;
+    std::cout << vec1-vec2 << std::endl;
 
     std::cout << "\nDotProduct:" << std::endl;
     std::cout << vec1*vec2 << std::endl;
 
     std::cout << "\nMultiplication by Scalar" << std::endl;
-    std::cout << (vec0*5.0).toString() << std::endl;
+    std::cout << vec0*5.0 << std::endl;
 
     const auto vecX = Vector<Scalar, 3>{r*sin(ang), 0.0, -r*cos(ang)};
     std::cout << "\nVector: " << vecX << " length:" << std::endl;
-    std::cout << (vecX).length() << std::endl;
+    std::cout << vecX.length() << std::endl;
 
     return 0;
 }
