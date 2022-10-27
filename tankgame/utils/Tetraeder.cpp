@@ -1,10 +1,11 @@
-#include "linearAlgebra.hpp"
+#include "Tetraeder.hpp"
 
 #include <cmath>
 #include <iostream>
-#include <variant>
 
-namespace linearAlgebra {
+using namespace linearAlgebra;
+
+namespace tetraeder {
 
     auto calculateTetraederVolume(Scalar r, Angle a) -> Scalar {
         using namespace std;

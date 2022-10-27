@@ -10,22 +10,21 @@
 
 namespace linearAlgebra {
 
-    using Point3d = std::tuple<double, double, double>;
-
     using Scalar = double;
 
     using Angle = double;
 
-
-    // Combine concepts
+    // Concept for the Scalar type of the Vector
     template<typename T>
     concept ScalarType
         = std::floating_point<T>
         || std::integral<T>
-        && requires(T a, T b) {
-        requires a+b;
-        requires a*b;
-    };
+        && requires(T a, T b, Scalar s) {
+            requires a+b;
+            requires a-b;
+            requires a*b;
+            requires s*a;
+        };
 
     template<ScalarType T, size_t Dim>
     class Vector {
@@ -111,9 +110,5 @@ namespace linearAlgebra {
         os << v.toString();
         return os;
     }
-    
-    auto calculateTetraederVolume(Scalar r, Angle a) -> Scalar;
-
-    auto calculateTetraederSurface(Scalar r, Angle a) -> Scalar;
 
 }

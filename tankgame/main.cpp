@@ -1,9 +1,11 @@
-#include "utils/linearAlgebra.hpp"
+#include "utils/Vector.hpp"
+#include "utils/Tetraeder.hpp"
 
 #include <iostream>
 #include <cmath>
 
 using namespace linearAlgebra;
+using namespace tetraeder;
 
 int main() {
     auto r = Scalar(10);
