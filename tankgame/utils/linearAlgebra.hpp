@@ -31,7 +31,14 @@ namespace linearAlgebra {
 
         public:
 
-            Vector(ScalarType auto ... xn) {
+            template <typename X0, typename ...Xn>
+            std::enable_if<sizeof...(Xn) + 1 == Dim, void>::type
+            assign(X0 x0, Xn... xn) {}
+            
+            template <ScalarType ...Xn,
+                std::size_t i = sizeof...(Xn),              // Get the amount of params in the init list
+                std::enable_if_t<i == Dim, int> = 0>        // Only activate if number of elements in list == Dim of the Vector
+            Vector(Xn ... xn) {
                 vec = std::initializer_list<T>{xn...};
             }
 
