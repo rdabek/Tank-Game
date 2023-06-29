@@ -2,7 +2,8 @@ set(TARGET_NAME TankGame)
 
 add_executable(${TARGET_NAME} main.cpp)
 
-add_subdirectory(utils)
+include_directories(include)
+add_subdirectory(src)
 
 # Compile options
 target_compile_options(

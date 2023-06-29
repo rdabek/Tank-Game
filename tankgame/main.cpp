@@ -1,5 +1,5 @@
-#include "utils/Vector.hpp"
-#include "utils/Tetraeder.hpp"
+#include "tankgame/utils/Vector.hpp"
+#include "tankgame/utils/Tetraeder.hpp"
 
 #include <iostream>
 #include <cmath>
@@ -43,6 +43,8 @@ int main() {
     const auto vecX = Vector<Scalar, 3>{r*sin(ang), 0.0, -r*cos(ang)};
     std::cout << "\nVector: " << vecX << " length:" << std::endl;
     std::cout << vecX.length() << std::endl;
+
+    std::cout << "Cross Product: " << vec1.x(vec2) << "\n";
 
     return 0;
 }
